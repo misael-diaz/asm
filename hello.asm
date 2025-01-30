@@ -1,6 +1,6 @@
 .global _start
 
-.section .data
+.section .rodata
 msg:
 .byte 'h','e','l','l','o',' ','w','o','r','l','d','!',10,0
 msg_end:
