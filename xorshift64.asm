@@ -113,6 +113,7 @@ movq sys_fsync, %rax
 movq -24(%rbp), %rdi
 syscall
 movq sys_close, %rax
+movq -24(%rbp), %rdi
 syscall
 .exit:
 addq $32, %rsp
