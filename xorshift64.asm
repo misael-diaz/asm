@@ -55,7 +55,7 @@ _start:
 .stack:
 pushq %rbp
 movq %rsp, %rbp
-subq $16, %rsp
+subq $32, %rsp
 .open:
 movq sys_open, %rax
 movq $data, %rdi
@@ -70,7 +70,7 @@ syscall
 cmpq $0, %rax
 jl .error
 # file-descriptor fd
-movq %rax, %r8
+movq %rax, -24(%rbp)
 .ixorshift:
 # loop index
 movq $0, -16(%rbp)
@@ -90,7 +90,7 @@ shlq $17, %rbx
 xorq %rbx, (%rax)
 movq %rax, %rsi
 movq sys_write, %rax
-movq %r8, %rdi
+movq -24(%rbp), %rdi
 movq $8, %rdx
 syscall
 cmpq $0, %rax
@@ -110,12 +110,12 @@ movq %rbx, %rdx
 syscall
 .close:
 movq sys_fsync, %rax
-movq %r8, %rdi
+movq -24(%rbp), %rdi
 syscall
 movq sys_close, %rax
 syscall
 .exit:
-addq $16, %rsp
+addq $32, %rsp
 popq %rbp
 movq sys_exit, %rax
 movq exit_success, %rdi
@@ -128,7 +128,7 @@ movq $err_end, %rbx
 subq %rsi, %rbx
 movq %rbx, %rdx
 syscall
-addq $16, %rsp
+addq $32, %rsp
 popq %rbp
 movq sys_exit, %rax
 movq exit_failure, %rdi
