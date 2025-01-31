@@ -75,20 +75,19 @@ movq %rax, -24(%rbp)
 # loop index
 movq $0, -16(%rbp)
 # need an effective address to write pseudo-random numbers to the data file
-leaq -8(%rbp), %rax
-movq seed, %rbx
-movq %rbx, (%rax)
+movq seed, %rax
 .xorshift64:
-movq (%rax), %rbx
+movq %rax, %rbx
 shlq $13, %rbx
-xorq %rbx, (%rax)
-movq (%rax), %rbx
+xorq %rbx, %rax
+movq %rax, %rbx
 shrq $7, %rbx
-xorq %rbx, (%rax)
-movq (%rax), %rbx
+xorq %rbx, %rax
+movq %rax, %rbx
 shlq $17, %rbx
-xorq %rbx, (%rax)
-movq %rax, %rsi
+xorq %rbx, %rax
+movq %rax, -8(%rbp)
+leaq -8(%rbp), %rsi
 movq sys_write, %rax
 movq -24(%rbp), %rdi
 movq $8, %rdx
@@ -96,7 +95,7 @@ syscall
 cmpq $0, %rax
 jl .error
 addq $1, -16(%rbp)
-leaq -8(%rbp), %rax
+movq -8(%rbp), %rax
 movq -16(%rbp), %rcx
 cmpq size, %rcx
 jne .xorshift64
