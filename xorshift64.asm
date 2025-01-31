@@ -41,9 +41,9 @@ msg:
 msg_end:
 .byte 0
 .align 8
-err:
+errmsg:
 .byte 'f','a','i','l','u','r','e',10,0
-err_end:
+errmsg_end:
 .byte 0
 .align 8
 data:
@@ -124,8 +124,8 @@ syscall
 .error:
 movq sys_write, %rax
 movq stderr, %rdi
-movq $err, %rsi
-movq $err_end, %rbx
+movq $errmsg, %rsi
+movq $errmsg_end, %rbx
 subq %rsi, %rbx
 movq %rbx, %rdx
 syscall
