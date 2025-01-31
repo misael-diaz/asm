@@ -46,9 +46,19 @@ i r reg
 
 where `reg` is the register name `rax`, `rbx`, etc.
 
-
 # Execute
 
 ```sh
 ./code.bin
 ```
+
+# Errors
+
+the following cli tool can help a lot to understand the error codes returned by the
+Linux kernel:
+
+```sh
+errno -l
+```
+
+the tool is provided by the `moreutils` package.
